@@ -19,10 +19,13 @@ webpackJsonp([0,1],[
 	
 	var _App2 = _interopRequireDefault(_App);
 	
+	var _test = __webpack_require__(/*! ./test */ 212);
+	
+	var _test2 = _interopRequireDefault(_test);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, { url: 'http://localhost:3000/todos',
-	  pollInterval: 2000 }), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_test2.default, { pollInterval: 2000 }), document.getElementById('root'));
 
 /***/ }),
 /* 1 */
@@ -22444,42 +22447,43 @@ webpackJsonp([0,1],[
 	    _createClass(App, [{
 	        key: 'loadTodosFromServer',
 	        value: function loadTodosFromServer() {
-	            var _this2 = this;
-	
-	            _axios2.default.get(this.props.url).then(function (res) {
-	                _this2.setState({ data: res.data });
-	            });
+	            // axios.get(this.props.url)
+	            //     .then(res => {
+	            //         this.setState({ data: res.data });
+	            //     })
 	        }
 	    }, {
 	        key: 'handleTodoSubmit',
 	        value: function handleTodoSubmit(comment) {
-	            var _this3 = this;
-	
 	            var comments = this.state.data;
 	            comment.id = Date.now();
 	            var newComments = comments.concat([comment]);
 	            this.setState({ data: newComments });
-	            _axios2.default.post(this.props.url + '/todo/' + comment.id, comment).catch(function (err) {
-	                console.error(err);
-	                _this3.setState({ data: comments });
-	            });
+	            // axios.post(this.props.url+'/todo/'+comment.id, comment)
+	            //     .catch(err => {
+	            //         console.error(err);
+	            //         this.setState({ data: comments });
+	            //     });
 	        }
 	    }, {
 	        key: 'handleTodoDelete',
 	        value: function handleTodoDelete(id) {
-	            _axios2.default.delete(this.props.url + '/' + id).then(function (res) {
-	                console.log('Comment deleted');
-	            }).catch(function (err) {
-	                console.error(err);
-	            });
+	            // axios.delete(`${this.props.url}/${id}`)
+	            //     .then(res => {
+	            //         console.log('Comment deleted');
+	            //     })
+	            //     .catch(err => {
+	            //         console.error(err);
+	            //     });
 	        }
 	    }, {
 	        key: 'handleTodoUpdate',
 	        value: function handleTodoUpdate(id, comment) {
 	            //sends the comment id and new author/text to our api
-	            _axios2.default.put(this.props.url + '/' + id, comment).catch(function (err) {
-	                console.log(err);
-	            });
+	            // axios.put(`${this.props.url}/${id}`, comment)
+	            //     .catch(err => {
+	            //         console.log(err);
+	            //     })
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -24311,6 +24315,58 @@ webpackJsonp([0,1],[
 	  };
 	};
 
+
+/***/ }),
+/* 212 */
+/*!************************!*\
+  !*** ./views/test.jsx ***!
+  \************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Test = function (_React$Component) {
+	    _inherits(Test, _React$Component);
+	
+	    function Test() {
+	        _classCallCheck(this, Test);
+	
+	        return _possibleConstructorReturn(this, (Test.__proto__ || Object.getPrototypeOf(Test)).apply(this, arguments));
+	    }
+	
+	    _createClass(Test, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                '123'
+	            );
+	        }
+	    }]);
+	
+	    return Test;
+	}(_react2.default.Component);
+	
+	exports.default = Test;
 
 /***/ })
 ]);

@@ -19,37 +19,37 @@ class App extends Component {
         this.handleTodoUpdate = this.handleTodoUpdate.bind(this);
     }
     loadTodosFromServer() {
-        axios.get(this.props.url)
-            .then(res => {
-                this.setState({ data: res.data });
-            })
+        // axios.get(this.props.url)
+        //     .then(res => {
+        //         this.setState({ data: res.data });
+        //     })
     }
     handleTodoSubmit(comment) {
         let comments = this.state.data;
         comment.id = Date.now();
         let newComments = comments.concat([comment]);
         this.setState({ data: newComments });
-        axios.post(this.props.url+'/todo/'+comment.id, comment)
-            .catch(err => {
-                console.error(err);
-                this.setState({ data: comments });
-            });
+        // axios.post(this.props.url+'/todo/'+comment.id, comment)
+        //     .catch(err => {
+        //         console.error(err);
+        //         this.setState({ data: comments });
+        //     });
     }
     handleTodoDelete(id) {
-        axios.delete(`${this.props.url}/${id}`)
-            .then(res => {
-                console.log('Comment deleted');
-            })
-            .catch(err => {
-                console.error(err);
-            });
+        // axios.delete(`${this.props.url}/${id}`)
+        //     .then(res => {
+        //         console.log('Comment deleted');
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //     });
     }
     handleTodoUpdate(id, comment) {
         //sends the comment id and new author/text to our api
-        axios.put(`${this.props.url}/${id}`, comment)
-            .catch(err => {
-                console.log(err);
-            })
+        // axios.put(`${this.props.url}/${id}`, comment)
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
     }
     componentDidMount() {
         this.loadTodosFromServer();
