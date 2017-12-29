@@ -26,3 +26,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.IndexPage{
+  width: 1200px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+.indexTitle{
+  font-size: 32px;
+}

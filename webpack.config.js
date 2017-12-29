@@ -1,25 +1,73 @@
-var webpack = require('webpack');
-
-var definePlugin = new webpack.DefinePlugin({
-    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
-    __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
-});
-var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+var autoprefixer = require('autoprefixer')
+// var definePlugin = new webpack.DefinePlugin({
+//     __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+//     __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
+// });
+// var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 module.exports = {
-    cache: true,
-    entry: {      main:  './views/index.jsx'   },
-    output: {    path: 'public/build',        filename: '[name].js'    },
+    // cache: true,
+    entry: __dirname + '/views/index.js' ,
+    output: { path: __dirname + '/public/build', filename: 'bundle.js' },
+    devtool: 'eval-source-map',
     module: {
-        loaders: [
-            {test: /\.jsx?$/, loader: 'babel', 
-            exclude: /(node_modules|bower_components)/, query: { presets: ['react', 'es2015'] }},
+        rules: [
+            {
+                test: /\.tsx?$/, 
+                use: ['awesome-typescript-loader']
+            },
+            {
+                test: /(\.(jsx|js)?$)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ["es2015","react"]
+                    },
+                    // exclude: './node_modules/'
+                }
+            },
+            {
+                test: /(\.(scss|css)?$)/,
+                // use: ['style-loader','css-loader','sass-loader','postcss-loader']
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options:{
+                            plugins: function(){
+                                return [autoprefixer]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(woff|svg|eot|ttf)?$/,
+                use: ['url-loader']
+            },  
+            {
+                test: /\.json$/,
+                use: ['json-loader']
+            }
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.ts','.tsx','.js','.json','.css','.scss','.jsx']
+    },
+    devServer: {
+        contentBase: './public',
+        historyApiFallback: true,
+        inline: true,
+        hot: true
     },
     plugins: [
-        definePlugin,
-        commonsPlugin
+        autoprefixer
     ]
 };

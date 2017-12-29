@@ -3,8 +3,6 @@
 
 import React, { Component } from 'react';
 // import style from './style';
-import TodoForm from './TodoForm';
-import TodoList from './TodoList';
 
 import axios from 'axios';
 
