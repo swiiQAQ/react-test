@@ -30,9 +30,10 @@ app.use(cookieParser('express_react_cookie'));
 // app.use('/', require('./main'));
 //管理页面路由
 app.use('/', require('./user'));
+app.use('/user', require('./user'));
 
 mongoose.Promise = require('bluebird');
-mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/todoapp`, function (err) {
+mongoose.createConnection(`mongodb://${config.dbHost}:${config.dbPort}/todoapp`, function (err) {
     if (err) {
         console.log(err, "数据库连接失败");
         return;
@@ -47,3 +48,6 @@ mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/todoapp`, function
         }
     });
 });
+var db = require('mongoskin').db('mongodb://localhost:27017/todoapp');
+module.exports=db;
+// exports.db = db;

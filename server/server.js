@@ -1,9 +1,10 @@
-import path from 'path'
-import Express from 'express'
-import favicon from 'serve-favicon'
-import httpProxy from 'http-proxy'
-import compression from 'compression'
-import config from './config/server.config.js'
+var path = require('path')
+var Express  = require( 'express')
+var favicon  = require( 'serve-favicon')
+var httpProxy  = require( 'http-proxy')
+var compression  = require( 'compression')
+var connectHistoryApiFallback = require('connect-history-api-fallback')
+var config  = require( '../config/server.config.js')
 
 const app = new Express();
 const port = config.port;
@@ -19,6 +20,7 @@ app.use('/',Express.static(path.join(__dirname,"..",'static')));
 
 
 const targetUrl = `http://${config.apiHost}:${config.apiPort}`;
+// debugger;
 const proxy = httpProxy.createProxyServer({
     target:targetUrl
 });
@@ -33,12 +35,13 @@ if(process.env.NODE_EVN!=='production'){
     const Webpack = require('webpack');
     const WebpackDevMiddleware = require('webpack-dev-middleware');
     const WebpackHotMiddleware = require('webpack-hot-middleware');
-    const webpackConfig = require('../webpack.dev');
+    const webpackConfig = require('../webpack.config.js');
 
     const compiler = Webpack(webpackConfig);
 
     app.use(WebpackDevMiddleware(compiler, {
         publicPath: '/',
+        // publicPath : './public',
         stats: {colors: true},
         lazy: false,
         watchOptions: {
@@ -47,6 +50,10 @@ if(process.env.NODE_EVN!=='production'){
         },
     }));
     app.use(WebpackHotMiddleware(compiler));
+
+    // const webpackConfig = require("../webpack.test.js");
+    // const compiler = Webpack(webpackConfig);
+    // app.use(WebpackDevMiddleware(compiler))
 }
 
 app.listen(port,(err)=>{

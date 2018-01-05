@@ -1,12 +1,29 @@
-var autoprefixer = require('autoprefixer')
+var autoprefixer = require('autoprefixer');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var config = require('./config/server.config.js');
+var pathLib = require('path');
+var ROOT_PATH = pathLib.resolve(__dirname);
+var ENTRY_PATH = pathLib.resolve(ROOT_PATH, 'views');
+var webpack = require("webpack")
 // var definePlugin = new webpack.DefinePlugin({
 //     __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
 //     __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
 // });
 // var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+// console.log(pathLib.resolve(ENTRY_PATH, 'index.js'));
 module.exports = {
     // cache: true,
-    entry: __dirname + '/views/index.js' ,
+    // entry: __dirname + '/views/index.js' ,
+    entry:{
+        index: [
+            'react-hot-loader/patch',
+            `webpack-hot-middleware/client?path=http://${config.host}:${config.port}/__webpack_hmr`,
+            pathLib.resolve(ENTRY_PATH, 'index.js')
+        ],
+        // vendor: ['react', 'react-dom', 'react-router-dom']
+    },
+    
     output: { path: __dirname + '/public/build', filename: 'bundle.js' },
     devtool: 'eval-source-map',
     module: {
@@ -68,6 +85,15 @@ module.exports = {
         hot: true
     },
     plugins: [
-        autoprefixer
+        autoprefixer,
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({
+            title: "React",
+            showErrors: true,
+        }),
+        new OpenBrowserPlugin({
+            url: `http://${config.host}:${config.port}`
+        }),
+        
     ]
 };
