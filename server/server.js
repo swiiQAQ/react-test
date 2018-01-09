@@ -10,7 +10,12 @@ const app = new Express();
 const port = config.port;
 
 app.use('/api',(req,res)=>{
-    proxy.web(req,res,{target:targetUrl})
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'ejs'); 
+    app.engine('html', require('ejs').renderFile);
+    console.log("api");
+    proxy.web(req,res,{target:targetUrl});
+    
 });
 
 
