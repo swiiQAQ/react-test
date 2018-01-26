@@ -13,7 +13,6 @@ app.use('/api',(req,res)=>{
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'ejs'); 
     app.engine('html', require('ejs').renderFile);
-    console.log("api");
     proxy.web(req,res,{target:targetUrl});
     
 });

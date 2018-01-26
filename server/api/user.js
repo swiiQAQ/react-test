@@ -2,69 +2,56 @@ require('babel-loader');
 var Express = require('express')
 const router = Express.Router();
 var User = require('../../model/user')
+var config = require('../../config/server.config.js')
+var mongoskin = require('mongoskin')
+
 // var db = require('./apiServer')
 // import { responseClient, md5, MD5_SUFFIX } from '../util'
-
+var db = mongoskin.db(`mongodb://${config.dbHost}:${config.dbPort}/${config.dataBase}`);
 router.get('/getUsers', (req, res) => {
-    console.log("getUser");
-    // let skip = (req.query.pageNum - 1) < 0 ? 0 : (req.query.pageNum - 1) * 10;
-    // let responseData = {
-    //     total: 0,
-    //     list: []
-    // };
-    // User.count()
-    //     .then(count => {
-    //         responseData.total = count;
-    //         User.find(null, '_id username type password', { skip: skip, limit: 10 })
-    //             .then((result) => {
-    //                 debugger;
-    //                 responseData.list = result;
-    //                 // responseClient(res, 200, 0, '', responseData)
-    //             })
-    //             .catch(err => {
-    //                 // responseClient(res);
-    //             })
-    //     });
+  db.collection('user').find().toArray(function (err, result) {
+    if (err) throw err;
+    res.json(result);
 
-    var db = require('mongoskin').db('mongodb://localhost:27017/todoapp');
-    
-      db.collection('user').find().toArray(function(err, result) {
-        if (err) throw err;
-        res.json(result);
-        
-      });
-
-
-    // User.count(null,function(result){
-    //     console.log(result);
-    //     // res.send(result);
-    //     res.json({name:1})
-    // })
-
-    // let responseData = {
-    //     total: 0,
-    //     list: []
-    // };
-    // User.count()
-    //     .then(count=>{
-    //         User.find().then((result)=>{
-    //             responseData.list = result;
-    //             res.json(result);
-    //         })
-    //     })
-
-    // var user1 = new User({
-    //     userName: 'swii',
-    //     password: '123'
-    // });
-    // console.log(user1);
-    // user1.save(function(err){
-    //     if(err){
-    //         console.log(err);
-    //     }
-    //         res.send('saved')
-    // })
-
+  });
 });
+router.post('/insert', (req, res) => {
+  var param = req.body;
+  db.collection('user').insert({ 'userName': param.userName, 'password': param.password }, function(err,result) {
+    if (!err) {
+      res.send({ 'status': 1 });
+    } else {
+      res.send({ 'status': 0 });
+    }
+  })
+})
+router.post('/delete',(req,res)=>{
+  var param = req.body;
+  if(param.id){
+      var ObjectId = mongoskin.ObjectID;
+      db.collection('user').remove({'_id':ObjectId(param.id)}, function (err, result) {
+          if(!err){
+              res.send({'status':1});
+          }else{
+              res.send({'status':0});
+          }
+      });
+  }
+})
+router.post('/update',(req,res)=>{
+  var param = req.body;
+  if(param.id){
+    var ObjectId = mongoskin.ObjectID;
+    db.collection('user').update({'_id':ObjectId(param.id)},{$set:{'userName':param.username,'password':param.password},function(arr,result){
+      if(!err){
+        res.send({'status':1});
+      }
+      else{
+        res.send({'status':0});
+      }
+    }})
+  }
+  
+})
 
 module.exports = router;

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Test from './test'
 import './style.css'
-import './App.css'
+import './App.css';
+import RouteBox from './RouteBox'
 
 
 // ReactDOM.render(
@@ -19,6 +19,6 @@ const mountNode = document.getElementById('app');
 // const store = configureStore();
 
 ReactDOM.render(
-  <Test pollInterval={2000}/>,
+  <RouteBox pollInterval={2000}/>,
     mountNode
 );

@@ -27,11 +27,25 @@
   to { transform: rotate(360deg); }
 }
 
-.IndexPage{
+.indexPage{
   width: 1200px;
   margin: 0 auto;
   padding-top: 100px;
 }
 .indexTitle{
   font-size: 32px;
+}
+.fakeTable p span{
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+  display: inline-block;
+  
+}
+.fakeTable .table_tt{
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
+}
+.fakeTable .table_tt span{
+  font-weight: 500;
 }

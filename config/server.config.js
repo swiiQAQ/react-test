@@ -5,6 +5,7 @@ module.exports = {
     apiPort:process.env.APIPORT || '3030',
     dbHost:"localhost",
     dbPort:"27017",
+    dataBase: 'todoapp',
     app:{
         title:"personal blog",
         description:'Nealyang\'s personal blog demo',
