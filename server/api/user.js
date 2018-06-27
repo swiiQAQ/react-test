@@ -1,7 +1,6 @@
 require('babel-loader');
 var Express = require('express')
 const router = Express.Router();
-var User = require('../../model/user')
 var config = require('../../config/server.config.js')
 var mongoskin = require('mongoskin')
 
@@ -42,14 +41,14 @@ router.post('/update',(req,res)=>{
   var param = req.body;
   if(param.id){
     var ObjectId = mongoskin.ObjectID;
-    db.collection('user').update({'_id':ObjectId(param.id)},{$set:{'userName':param.username,'password':param.password},function(arr,result){
+    db.collection('user').update({'_id':ObjectId(param.id)},{'_id':ObjectId(param.id),'userName':param.username,'password':param.password},function(err,result){
       if(!err){
         res.send({'status':1});
       }
       else{
         res.send({'status':0});
       }
-    }})
+    })
   }
   
 })

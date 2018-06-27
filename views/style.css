@@ -64,6 +64,7 @@ a {
   margin-left: 230px;
   line-height: 30px;
   text-align: center;
+  cursor: pointer;
 }
 .table_td label{
   float: right;

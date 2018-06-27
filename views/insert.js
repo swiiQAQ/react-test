@@ -22,8 +22,11 @@ class Insert extends React.Component{
             password: password
         }
         console.log(params)
-        post('/user/insert',params).then(function(res){
+        post('/user/insert',params).then((res)=>{
             console.log(res);
+            if(res.status){
+                this.props.history.push('/');
+            }
         }).catch((err)=>{
             console.log(err);
         })
